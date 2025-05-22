@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPG – Inventário de Percepções Gerais</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    .item {
+      margin-bottom: 25px;
+    }
+    label {
+      font-weight: bold;
+    }
+    .rating {
+      display: flex;
+      gap: 10px;
+      margin: 5px 0 15px 0;
+    }
+    .rating label {
+      font-weight: normal;
+    }
+    .question {
+      margin-bottom: 5px;
+    }
+    .section-title {
+      margin-top: 40px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>IPG – Inventário de Percepções Gerais</h1>
+    <p><strong>Instruções:</strong> Para cada afirmação, marque duas vezes: uma sobre como você se vê, e outra sobre como acha que os outros te veem. Use a escala de 0 (não se aplica) a 5 (aplica-se totalmente).</p>
+
+    <h2 class="section-title">Respostas</h2>
+
+    <!-- Início dos 27 itens -->
+    <script>
+      const perguntas = [
+        "Costumo pensar muito antes de tomar decisões.",
+        "Sinto necessidade de agradar as pessoas ao meu redor.",
+        "Tenho facilidade para me adaptar a ambientes diferentes.",
+        "Evito conflitos, mesmo quando não concordo com algo.",
+        "Consigo manter a calma mesmo em situações difíceis.",
+        "Quando algo me incomoda, costumo guardar para mim.",
+        "Me considero uma pessoa objetiva e direta.",
+        "Tenho dificuldades em lidar com críticas.",
+        "Me interesso por entender como as outras pessoas funcionam.",
+        "Normalmente sou eu quem toma a iniciativa nas relações.",
+        "As pessoas me acham calmo(a) e controlado(a).",
+        "Acredito que passo uma imagem de segurança, mesmo quando não me sinto assim.",
+        "As pessoas me veem como alguém acessível e fácil de conversar.",
+        "Imagino que os outros me consideram reservado(a).",
+        "Costumo parecer mais forte do que realmente me sinto.",
+        "As pessoas me veem como alguém confiável.",
+        "Acredito que passo a imagem de alguém exigente.",
+        "Às vezes sinto que as pessoas interpretam mal minhas intenções.",
+        "As pessoas me veem como alguém equilibrado, mesmo quando estou passando por dificuldades.",
+        "Noto que costumo ser percebido(a) de maneira diferente do que realmente sou.",
+        "Às vezes sou mais difícil de lidar do que gostaria de admitir.",
+        "Costumo parecer calmo(a), mesmo quando estou frustrado(a) por dentro.",
+        "Sinto que alguns lados meus não são bem compreendidos pelas pessoas.",
+        "Às vezes finjo estar bem para evitar preocupações dos outros.",
+        "Já me disseram que sou diferente do que pareço à primeira vista.",
+        "Eu me esforço para parecer mais seguro(a) do que realmente sou.",
+        "Tenho traços que prefiro esconder, mesmo de pessoas próximas."
+      ];
+
+      for (let i = 0; i < perguntas.length; i++) {
+        const numero = i + 1;
+        document.write(`
+        <div class="item">
+          <div class="question">${numero}. ${perguntas[i]}</div>
+          <label>Sua percepção:</label>
+          <div class="rating">
+            <label><input type="radio" name="q${numero}-auto" value="0"> 0</label>
+            <label><input type="radio" name="q${numero}-auto" value="1"> 1</label>
+            <label><input type="radio" name="q${numero}-auto" value="2"> 2</label>
+            <label><input type="radio" name="q${numero}-auto" value="3"> 3</label>
+            <label><input type="radio" name="q${numero}-auto" value="4"> 4</label>
+            <label><input type="radio" name="q${numero}-auto" value="5"> 5</label>
+          </div>
+          <label>Percepção que acredita causar:</label>
+          <div class="rating">
+            <label><input type="radio" name="q${numero}-hetero" value="0"> 0</label>
+            <label><input type="radio" name="q${numero}-hetero" value="1"> 1</label>
+            <label><input type="radio" name="q${numero}-hetero" value="2"> 2</label>
+            <label><input type="radio" name="q${numero}-hetero" value="3"> 3</label>
+            <label><input type="radio" name="q${numero}-hetero" value="4"> 4</label>
+            <label><input type="radio" name="q${numero}-hetero" value="5"> 5</label>
+          </div>
+        </div>
+        `);
+      }
+    </script>
+
+    <p style="margin-top: 40px; font-size: 0.9em; color: #777">Formulário apenas para fins de preenchimento pessoal. As respostas não são enviadas automaticamente.</p>
+  </div>
+</body>
+</html>
+
