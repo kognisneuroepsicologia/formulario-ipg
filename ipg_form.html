@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IPG - Inventário de Percepções Gerais</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; max-width: 800px; }
+  h2 { border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+  label { display: block; margin-top: 10px; }
+  select { width: 60px; margin-left: 10px; }
+  button { margin-top: 20px; padding: 10px 15px; font-size: 16px; }
+  pre { background: #f9f9f9; padding: 15px; white-space: pre-wrap; border: 1px solid #ccc; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<h1>IPG - Inventário de Percepções Gerais</h1>
+
+<form id="ipgForm">
+
+  <h2>Autoimagem</h2>
+  <div id="autoimagem"></div>
+
+  <h2>Imagem Atribuída</h2>
+  <div id="imagemAtribuida"></div>
+
+  <h2>Itens de Controle</h2>
+  <div id="controle"></div>
+
+  <button type="submit">Gerar Relatório</button>
+</form>
+
+<pre id="resultado"></pre>
+
+<script>
+const bloco1 = [
+  "Costumo pensar muito antes de tomar decisões.",
+  "Sinto necessidade de agradar as pessoas ao meu redor.",
+  "Tenho facilidade para me adaptar a ambientes diferentes.",
+  "Evito conflitos, mesmo quando não concordo com algo.",
+  "Consigo manter a calma mesmo em situações difíceis.",
+  "Quando algo me incomoda, costumo guardar para mim.",
+  "Me considero uma pessoa objetiva e direta.",
+  "Tenho dificuldades em lidar com críticas.",
+  "Me interesso por entender como as outras pessoas funcionam.",
+  "Normalmente sou eu quem toma a iniciativa nas relações."
+];
+
+const bloco2 = [
+  "As pessoas me acham calmo(a) e controlado(a).",
+  "Acredito que passo uma imagem de segurança, mesmo quando não me sinto assim.",
+  "As pessoas me veem como alguém acessível e fácil de conversar.",
+  "Imagino que os outros me consideram reservado(a).",
+  "Costumo parecer mais forte do que realmente me sinto.",
+  "As pessoas me veem como alguém confiável.",
+  "Acredito que passo a imagem de alguém exigente.",
+  "Às vezes sinto que as pessoas interpretam mal minhas intenções.",
+  "As pessoas me veem como alguém equilibrado, mesmo quando estou passando por dificuldades.",
+  "Notei que costumo ser percebido(a) de maneira diferente do que realmente sou."
+];
+
+const controleItens = [
+  "Às vezes sou mais difícil de lidar do que gostaria de admitir.",
+  "Costumo parecer calmo(a), mesmo quando estou frustrado(a) por dentro.",
+  "Sinto que alguns lados meus não são bem compreendidos pelas pessoas.",
+  "Às vezes finjo estar bem para evitar preocupações dos outros.",
+  "Já me disseram que sou diferente do que pareço à primeira vista.",
+  "Eu me esforço para parecer mais seguro(a) do que realmente sou.",
+  "Tenho traços que prefiro esconder, mesmo de pessoas próximas."
+];
+
+function criarPerguntas(lista, prefixo) {
+  return lista.map((texto, i) => {
+    return `<label for="${prefixo}${i}">${texto}
+      <select id="${prefixo}${i}" name="${prefixo}${i}">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </label>`;
+  }).join('\n');
+}
+
+document.getElementById('autoimagem').innerHTML = criarPerguntas(bloco1, 'auto');
+document.getElementById('imagemAtribuida').innerHTML = criarPerguntas(bloco2, 'ima');
+document.getElementById('controle').innerHTML = criarPerguntas(controleItens, 'ctrl');
+
+function pegarRespostas(prefixo, tamanho) {
+  let respostas = [];
+  for(let i=0; i<tamanho; i++) {
+    const val = parseInt(document.getElementById(prefixo+i).value);
+    respostas.push(val);
+  }
+  return respostas;
+}
+
+function gerarRelatorio(auto, ima, ctrl) {
+  function itensAcimaNota(itens, respostas, notaMin=4) {
+    return itens.filter((_,i) => respostas[i]>=notaMin);
+  }
+  function itensDiferencaGrande(itens, resp1, resp2, limite=3) {
+    return itens.filter((_,i) => Math.abs(resp1[i]-resp2[i])>=limite);
+  }
+
+  let texto = "Relatório IPG — Inventário de Percepções Gerais\n\n";
+
+  texto += "1. Autoimagem:\n";
+  const autoAlta = itensAcimaNota(bloco1, auto);
+  if(autoAlta.length>0) {
+    texto += "- Você se percebe com as seguintes características principais:\n";
+    autoAlta.forEach(item => texto += `  • ${item}\n`);
+  } else {
+    texto += "Nenhuma característica foi percebida com alta intensidade.\n";
+  }
+
+  texto += "\n2. Imagem Atribuída:\n";
+  const imaAlta = itensAcimaNota(bloco2, ima);
+  if(imaAlta.length>0) {
+    texto += "- Você acredita que as pessoas o veem como alguém que apresenta:\n";
+    imaAlta.forEach(item => texto += `  • ${item}\n`);
+  } else {
+    texto += "Nenhuma característica foi atribuída com alta intensidade pelas pessoas.\n";
+  }
+
+  texto += "\n3. Discrepâncias Importantes:\n";
+  const discrepancias = itensDiferencaGrande(bloco1, auto, ima);
+  if(discrepancias.length>0) {
+    texto += "- Diferenças relevantes foram encontradas entre sua autoimagem e a imagem atribuída nos aspectos:\n";
+    discrepancias.forEach(item => texto += `  • ${item}\n`);
+    texto += "  Essas diferenças podem indicar insegurança, autocrítica elevada ou percepção social distinta.\n";
+  } else {
+    texto += "Não foram encontradas discrepâncias relevantes entre sua autoimagem e a imagem atribuída.\n";
+  }
+
+  texto += "\n4. Itens de Controle — Consistência Interna:\n";
+  const ctrlAlta = itensAcimaNota(controleItens, ctrl);
+  if(ctrlAlta.length>0) {
+    texto += "- Foi identificado que você pode tender a:\n";
+    ctrlAlta.forEach(item => texto += `  • ${item}\n`);
+    texto += "  Essas percepções podem ser úteis para explorar defesas emocionais na psicoterapia.\n";
+  } else {
+    texto += "Não foram identificados sinais relevantes de defesas ou inconsistências internas.\n";
+  }
+
+  texto += "\n5. Sugestões para Reflexão:\n";
+  texto += "Refletir sobre como você se percebe e como acredita ser percebido pelos outros pode favorecer seu autoconhecimento e relações interpessoais. Trabalhar essas áreas em psicoterapia pode ser muito benéfico.\n";
+
+  return texto;
+}
+
+document.getElementById('ipgForm').addEventListener('submit', function(event){
+  event.preventDefault();
+  const autoResp = pegarRespostas('auto', bloco1.length);
+  const imaResp = pegarRespostas('ima', bloco2.length);
+  const ctrlResp = pegarRespostas('ctrl', controleItens.length);
+
+  const resultado = gerarRelatorio(autoResp, imaResp, ctrlResp);
+  document.getElementById('resultado').textContent = resultado;
+});
+</script>
+
+</body>
+</html>
