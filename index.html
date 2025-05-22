@@ -52,9 +52,8 @@
     <h1>IPG – Inventário de Percepções Gerais</h1>
     <p><strong>Instruções:</strong> Para cada afirmação, marque duas vezes: uma sobre como você se vê, e outra sobre como acha que os outros te veem. Use a escala de 0 (não se aplica) a 5 (aplica-se totalmente).</p>
 
-    <h2 class="section-title">Respostas</h2>
+    <h2 class="section-title">Responda às afirmações a seguir:</h2>
 
-    <!-- Início dos 27 itens -->
     <script>
       const perguntas = [
         "Costumo pensar muito antes de tomar decisões.",
@@ -91,7 +90,7 @@
         document.write(`
         <div class="item">
           <div class="question">${numero}. ${perguntas[i]}</div>
-          <label>Sua percepção:</label>
+          <label>Como você se vê:</label>
           <div class="rating">
             <label><input type="radio" name="q${numero}-auto" value="0"> 0</label>
             <label><input type="radio" name="q${numero}-auto" value="1"> 1</label>
@@ -100,7 +99,7 @@
             <label><input type="radio" name="q${numero}-auto" value="4"> 4</label>
             <label><input type="radio" name="q${numero}-auto" value="5"> 5</label>
           </div>
-          <label>Percepção que acredita causar:</label>
+          <label>Como você acredita que os outros te veem:</label>
           <div class="rating">
             <label><input type="radio" name="q${numero}-hetero" value="0"> 0</label>
             <label><input type="radio" name="q${numero}-hetero" value="1"> 1</label>
@@ -114,8 +113,7 @@
       }
     </script>
 
-    <p style="margin-top: 40px; font-size: 0.9em; color: #777">Formulário apenas para fins de preenchimento pessoal. As respostas não são enviadas automaticamente.</p>
+    <p style="margin-top: 40px; font-size: 0.9em; color: #777">Este formulário é apenas para preenchimento pessoal. Nenhuma resposta será enviada automaticamente.</p>
   </div>
 </body>
 </html>
-
