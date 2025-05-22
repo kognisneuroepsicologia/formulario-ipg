@@ -52,7 +52,7 @@
     <h1>IPG – Inventário de Percepções Gerais</h1>
     <p><strong>Instruções:</strong> Para cada afirmação, marque duas vezes: uma sobre como você se vê, e outra sobre como acha que os outros te veem. Use a escala de 0 (não se aplica) a 5 (aplica-se totalmente).</p>
 
-    <h2 class="section-title">Inventário</h2>
+    <h2 class="section-title">Respostas</h2>
 
     <!-- Início dos 27 itens -->
     <script>
@@ -91,7 +91,7 @@
         document.write(`
         <div class="item">
           <div class="question">${numero}. ${perguntas[i]}</div>
-          <label>Como você se vê:</label>
+          <label>Sua percepção:</label>
           <div class="rating">
             <label><input type="radio" name="q${numero}-auto" value="0"> 0</label>
             <label><input type="radio" name="q${numero}-auto" value="1"> 1</label>
@@ -100,7 +100,7 @@
             <label><input type="radio" name="q${numero}-auto" value="4"> 4</label>
             <label><input type="radio" name="q${numero}-auto" value="5"> 5</label>
           </div>
-          <label>Como você acha que os outros te veem:</label>
+          <label>Percepção que acredita causar:</label>
           <div class="rating">
             <label><input type="radio" name="q${numero}-hetero" value="0"> 0</label>
             <label><input type="radio" name="q${numero}-hetero" value="1"> 1</label>
